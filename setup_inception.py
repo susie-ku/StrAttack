@@ -49,7 +49,8 @@ import scipy.misc
 
 import numpy as np
 from six.moves import urllib
-import tensorflow as tf
+import tensorflow.compat.v1 as tf
+tf.disable_v2_behavior()
 
 FLAGS = tf.app.flags.FLAGS
 
@@ -70,7 +71,7 @@ tf.app.flags.DEFINE_integer('num_top_predictions', 5,
                             """Display this many predictions.""")
 
 # pylint: disable=line-too-long
-DATA_URL = 'http://jaina.cs.ucdavis.edu/datasets/adv/imagenet/inception_v3_2016_08_28_frozen.tar.gz'
+DATA_URL = 'https://image-net.org/data/ILSVRC/2012/ILSVRC2012_img_test_v10102019.tar'
 # pylint: enable=line-too-long
 
 
@@ -270,7 +271,7 @@ def maybe_download_and_extract():
     print()
     statinfo = os.stat(filepath)
     print('Succesfully downloaded', filename, statinfo.st_size, 'bytes.')
-  tarfile.open(filepath, 'r:gz').extractall(dest_directory)
+  tarfile.open(filepath).extractall(dest_directory)
 
 
 def main(_):
